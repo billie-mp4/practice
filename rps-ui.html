@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple DOM example</title>
+<style>
+    *{
+        font-family: "Arial";
+    }
+</style>
+</head>
+<body>
+    <button onclick="playRound(0)">rock</button>
+    <button onclick="playRound(1)">paper</button>
+    <button onclick="playRound(2)">scissors</button>
+    <div></div>
+<script>   
+    let humanScore=0
+    let cpScore=0
+    const btn=document.querySelectorAll('button')
+    const div=document.querySelector('div')
+    const max=(num1,num2)=>{
+        if(num1>num2)return num1
+        return num2
+    }
+    const playRound=hand=>{
+        const cpHand=Math.floor(Math.random()*3)
+        if((hand===0&&cpHand===2)||(hand===1&&cpHand===0)||(hand===2&&cpHand===1))
+            humanScore++
+        else if(hand!==cpHand)
+            cpScore++
+
+        if(humanScore>4||cpScore>4){
+            btn.forEach(button=>{
+                button.disabled=true;
+            })
+            div.textContent+=` winner: ${max(humanScore,cpScore)}`
+        }
+        else{
+            div.textContent=`your points: ${humanScore} cp points: ${cpScore}` 
+        }
+    }
+</script>
+</body>
+</html>
