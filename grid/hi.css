@@ -1,0 +1,26 @@
+*{
+    font-family: 'Arial';
+    margin:0;
+    padding:0;
+}
+.container{
+    width:200px;
+    height:200px;
+    display:flex;
+    flex-direction: column;
+    background-color:turquoise;
+    gap:1px;
+}
+.row{
+    display:flex;
+    flex:1;
+    background-color: blue;
+    gap:1px;
+}
+.block{
+    flex:1;
+    background-color:azure;
+}
+.block:hover{
+    background:lightcyan;
+}
