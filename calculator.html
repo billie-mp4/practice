@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple DOM example</title>
+<style>
+    *{
+        font-family: 'Arial';
+    }
+    body{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background:black;
+    }
+    .div1{
+        display:flex;
+        flex-direction: column;
+        width:250px;
+        height:400px;
+        background-color: turquoise;
+        gap:1px;
+    }
+    .div2{
+        display:flex;
+        flex:1;
+        gap:1px;
+    }
+    button{
+        display:flex;
+        flex:1;
+        background:azure;
+        justify-content: center;
+        align-items: center;
+
+        border: none; /* No border */
+        text-decoration: none; /* No underline */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: color 0.3s;
+    }
+    button:hover{
+        background:lightcyan;
+    }
+    button:active{
+        background:lightcyan;
+    }
+    button > p{
+        flex:1;
+        margin:auto;
+        font-size: large;
+        color:darkcyan;
+    }
+    .display{
+        color:darkcyan;
+        justify-content: flex-end;
+        align-items:flex-end;
+        padding-right:20px;
+    }
+    .display > p{
+        font-size:xx-large;
+        margin:0;
+        padding:0;
+    }
+</style>
+</head>
+<body>
+    <div class="div1">
+        <div class="div2 display" style="flex:1.5;"><p></p></div>
+        <div class="div2">
+            <button class="ac"><p>AC</p></button>
+            <button><p>⁺/₋</p></button>
+            <button><p>%</p></button>
+            <button class="op"><p>➗</p></button>
+        </div>
+        <div class="div2">
+            <button class="num"><p>7</p></button>
+            <button class="num"><p>8</p></button>
+            <button class="num"><p>9</p></button>
+            <button class="op"><p>✖️</p></button>
+        </div>
+        <div class="div2">
+            <button class="num"><p>4</p></button>
+            <button class="num"><p>5</p></button>
+            <button class="num"><p>6</p></button>
+            <button class="op"><p>➖</p></button>
+        </div>
+        <div class="div2">
+            <button class="num"><p>1</p></button>
+            <button class="num"><p>2</p></button>
+            <button class="num"><p>3</p></button>
+            <button class="op"><p>➕</p></button>
+        </div>
+        <div class="div2">
+            <button class="num" style="flex:2;"><p>0</p></button>
+            <button><p>.</p></button>
+            <button class="equal"><p>🟰</p></button>
+        </div>
+    </div>
+    <script defer>
+        let arg1,arg2,operator
+        const nums=document.querySelectorAll('.num')
+        const display=document.querySelector('.display').firstChild
+        const ops=document.querySelectorAll('.op')
+        const equalBtn=document.querySelector('.equal')
+        const ac=document.querySelector('.ac')
+
+        const operate=(x,y,z)=>{
+            if(x===undefined||y===undefined)return
+            switch(z){
+                case '➕':return x+y
+                case '➖':return x-y
+                case '✖️':return x*y
+                case '➗':
+                    if(y!==0)return x/y
+                    alert('not divisible by 0')
+            }
+        }
+        ac.addEventListener('click',()=>{
+            display.textContent=''
+            arg1=undefined
+            arg2=undefined
+            operator=''
+        })
+        nums.forEach(num=>{num.addEventListener('click',()=>{
+            if(arg1!==undefined){
+                display.textContent=''
+            }
+            display.textContent+=num.firstChild.textContent
+        })})
+        ops.forEach(op=>{op.addEventListener('click',()=>{
+            if(operator){
+                equalBtn.click()
+            }
+            operator=op.firstChild.textContent
+            arg1=parseFloat(display.textContent)
+        })})
+        equalBtn.addEventListener('click',()=>{
+            arg2=parseFloat(display.textContent)
+            display.textContent=operate(arg1,arg2,operator)
+        })
+    </script>
+</body>
+</html>
